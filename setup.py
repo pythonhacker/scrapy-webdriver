@@ -7,10 +7,6 @@ import sys
 
 from scrapy_webdriver import metadata
 
-# Auto-install and download distribute.
-import distribute_setup
-distribute_setup.use_setuptools()
-
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
