@@ -19,6 +19,8 @@ class WebdriverManager(object):
         self._browser = crawler.settings.get('WEBDRIVER_BROWSER', None)
         self._user_agent = crawler.settings.get('USER_AGENT', None)
         self._options = crawler.settings.get('WEBDRIVER_OPTIONS', dict())
+        self._geom = crawler.settings.get('WEBDRIVER_GEOMETRY', (1280, 800))
+        self._pos = crawler.settings.get('WEBDRIVER_POSITION', (100, 100))
         self._webdriver = None
         if isinstance(self._browser, basestring):
             if '.' in self._browser:
@@ -51,6 +53,9 @@ class WebdriverManager(object):
             options = self._options
             options[cap_attr] = self._desired_capabilities
             self._webdriver = self._browser(**options)
+            self._webdriver.set_window_size(*self._geom)
+            self._webdriver.set_window_position(*self._pos)
+        
             self.crawler.signals.connect(self._cleanup, signal=engine_stopped)
         return self._webdriver
 
