@@ -44,7 +44,7 @@ class WebdriverDownloadHandler(object):
         request.manager.webdriver.get(request.url)
         # Let the page load fully
         if self._sleeprange:
-            time.sleep(random.randrange(self._sleeprange))
+            time.sleep(random.randrange(*self._sleeprange))
             
         return WebdriverResponse(request.url, request.manager.webdriver)
 
