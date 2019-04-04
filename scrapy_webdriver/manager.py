@@ -96,5 +96,5 @@ class WebdriverManager(object):
         """Clean up when the scrapy engine stops."""
         if self._webdriver is not None:
             self._webdriver.quit()
-            assert len(self._wait_queue) + len(self._wait_inpage_queue) == 0, \
-                'Webdriver queue not empty at engine stop.'
+            #assert len(self._wait_queue) + len(self._wait_inpage_queue) == 0, \
+            #    'Webdriver queue not empty at engine stop.'
