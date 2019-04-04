@@ -1,3 +1,5 @@
+import random
+import time
 from scrapy import log, version_info
 from scrapy.utils.decorator import inthread
 from scrapy.utils.misc import load_object
@@ -21,6 +23,7 @@ class WebdriverDownloadHandler(object):
     """
     def __init__(self, settings):
         self._enabled = settings.get('WEBDRIVER_BROWSER') is not None
+        self._sleeprange = settings.get('WEBDRIVER_SLEEP')
         self._fallback_handler = load_object(FALLBACK_HANDLER)(settings)
 
     def download_request(self, request, spider):
@@ -39,6 +42,10 @@ class WebdriverDownloadHandler(object):
         """Download a request URL using webdriver."""
         log.msg('Downloading %s with webdriver' % request.url, level=log.DEBUG)
         request.manager.webdriver.get(request.url)
+        # Let the page load fully
+        if self._sleeprange:
+            time.sleep(random.randrange(self._sleeprange))
+            
         return WebdriverResponse(request.url, request.manager.webdriver)
 
     @inthread
